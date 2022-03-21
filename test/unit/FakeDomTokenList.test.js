@@ -68,3 +68,21 @@ Deno.test({
 		assertEquals(list.value, "a c");
 	},
 });
+
+Deno.test({
+	name: "contains() true",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		assertEquals(list.contains("b"), true);
+	},
+});
+
+Deno.test({
+	name: "contains() false",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		assertEquals(list.contains("d"), false);
+	},
+});

@@ -36,6 +36,13 @@ export class FakeDomTokenList {
 			this.#list.delete(token);
 		}
 	}
+
+	/**
+	 * @param {string} token
+	 */
+	contains(token) {
+		return this.#list.has(token);
+	}
 }
 
 const cast =
