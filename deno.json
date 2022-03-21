@@ -12,5 +12,6 @@
 			"lineWidth": 120,
 			"useTabs": true
 		}
-	}
+	},
+	"importMap": "importmap.json"
 }
