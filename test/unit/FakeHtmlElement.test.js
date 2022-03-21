@@ -122,3 +122,12 @@ Deno.test({
 		assertEquals(el.getAttribute("attr"), null);
 	},
 });
+
+Deno.test({
+	name: "appendChild()",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+		el.appendChild(child);
+	},
+});

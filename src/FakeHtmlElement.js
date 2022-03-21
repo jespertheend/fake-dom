@@ -7,6 +7,8 @@ export class FakeHtmlElement extends EventTarget {
 	#paddingTop;
 	/** @type {Map<string, string>} */
 	#attributes = new Map();
+	/** @type {(FakeHtmlElement | HTMLElement)[]} */
+	#children = [];
 
 	constructor({
 		x = 0,
@@ -72,6 +74,13 @@ export class FakeHtmlElement extends EventTarget {
 	 */
 	removeAttribute(name) {
 		return this.#attributes.delete(name.toLowerCase());
+	}
+
+	/**
+	 * @param {FakeHtmlElement | HTMLElement} child
+	 */
+	appendChild(child) {
+		this.#children.push(child);
 	}
 }
 
