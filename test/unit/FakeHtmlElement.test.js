@@ -1,4 +1,4 @@
-import { assertEquals, assertStrictEquals } from "asserts";
+import { assertEquals, assertStrictEquals, assertThrows } from "asserts";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({
@@ -193,5 +193,16 @@ Deno.test({
 		assertStrictEquals(el.children[0], child1);
 		assertStrictEquals(el.children[1], newChild);
 		assertStrictEquals(el.children[2], child2);
+	},
+});
+
+Deno.test({
+	name: "insertBefore() throws with an invalid second argument",
+	fn() {
+		const el = new FakeHtmlElement();
+		const newChild = new FakeHtmlElement();
+		const unaddedChild = new FakeHtmlElement();
+
+		assertThrows(() => el.insertBefore(newChild, unaddedChild));
 	},
 });
