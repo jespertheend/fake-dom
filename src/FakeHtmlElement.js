@@ -96,6 +96,17 @@ export class FakeHtmlElement extends EventTarget {
 	}
 
 	/**
+	 * @param {FakeHtmlElement | HTMLElement} child
+	 */
+	removeChild(child) {
+		const index = this.#children.indexOf(child);
+		if (index === -1) {
+			throw new Error("The node to be removed is not a child of this node.");
+		}
+		this.#children.splice(index, 1);
+	}
+
+	/**
 	 * @param {FakeHtmlElement | HTMLElement} newNode
 	 * @param {FakeHtmlElement | HTMLElement} referenceNode
 	 */

@@ -206,3 +206,32 @@ Deno.test({
 		assertThrows(() => el.insertBefore(newChild, unaddedChild));
 	},
 });
+
+Deno.test({
+	name: "removeChild()",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child1 = new FakeHtmlElement();
+		const child2 = new FakeHtmlElement();
+		const child3 = new FakeHtmlElement();
+		el.appendChild(child1);
+		el.appendChild(child2);
+		el.appendChild(child3);
+
+		el.removeChild(child2);
+
+		assertEquals(el.children.length, 2);
+		assertStrictEquals(el.children[0], child1);
+		assertStrictEquals(el.children[1], child3);
+	},
+});
+
+Deno.test({
+	name: "removeChild() throws if the child to be removed is not a child of the node.",
+	fn() {
+		const el = new FakeHtmlElement();
+		const el2 = new FakeHtmlElement();
+
+		assertThrows(() => el.removeChild(el2));
+	},
+});
