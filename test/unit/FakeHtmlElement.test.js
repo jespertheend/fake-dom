@@ -176,3 +176,22 @@ Deno.test({
 		assertEquals(el.children.length, 1);
 	},
 });
+
+Deno.test({
+	name: "insertBefore()",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child1 = new FakeHtmlElement();
+		const child2 = new FakeHtmlElement();
+		el.appendChild(child1);
+		el.appendChild(child2);
+
+		const newChild = new FakeHtmlElement();
+		el.insertBefore(newChild, child2);
+
+		assertEquals(el.children.length, 3);
+		assertStrictEquals(el.children[0], child1);
+		assertStrictEquals(el.children[1], newChild);
+		assertStrictEquals(el.children[2], child2);
+	},
+});

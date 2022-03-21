@@ -84,6 +84,10 @@ export class FakeHtmlElement extends EventTarget {
 		return this.#attributes.delete(name.toLowerCase());
 	}
 
+	get children() {
+		return [...this.#children];
+	}
+
 	/**
 	 * @param {FakeHtmlElement | HTMLElement} child
 	 */
@@ -91,8 +95,16 @@ export class FakeHtmlElement extends EventTarget {
 		this.#children.push(child);
 	}
 
-	get children() {
-		return [...this.#children];
+	/**
+	 * @param {FakeHtmlElement | HTMLElement} newNode
+	 * @param {FakeHtmlElement | HTMLElement} referenceNode
+	 */
+	insertBefore(newNode, referenceNode) {
+		const index = this.#children.indexOf(referenceNode);
+		if (index === -1) {
+			throw new Error("Invalid reference node");
+		}
+		this.#children.splice(index, 0, newNode);
 	}
 }
 
