@@ -21,20 +21,19 @@ export class FakeDomTokenList {
 
 	/**
 	 * @param {string} token
-	 * @param {boolean} force
+	 * @param {boolean} [force]
 	 */
 	toggle(token, force) {
-		let hasToken;
+		let shouldHaveToken;
 		if (force === undefined) {
-			hasToken = this.#list.has(token);
+			shouldHaveToken = !this.#list.has(token);
 		} else {
-			hasToken = force;
+			shouldHaveToken = force;
 		}
-		hasToken = !hasToken;
-		if (hasToken) {
-			this.#list.delete(token);
-		} else {
+		if (shouldHaveToken) {
 			this.#list.add(token);
+		} else {
+			this.#list.delete(token);
 		}
 	}
 }

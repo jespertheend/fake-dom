@@ -18,3 +18,53 @@ Deno.test({
 		assertEquals(list.value, "a b c");
 	},
 });
+
+Deno.test({
+	name: "toggle()",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		list.toggle("b");
+		assertEquals(list.value, "a c");
+	},
+});
+
+Deno.test({
+	name: "toggle() true when doesn't exist yet",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "c");
+		list.toggle("b", true);
+		assertEquals(list.value, "a c b");
+	},
+});
+
+Deno.test({
+	name: "toggle() true when it already exists",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		list.toggle("b", true);
+		assertEquals(list.value, "a b c");
+	},
+});
+
+Deno.test({
+	name: "toggle() false when it already doesn't exists",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "c");
+		list.toggle("b", false);
+		assertEquals(list.value, "a c");
+	},
+});
+
+Deno.test({
+	name: "toggle() false when it exists",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		list.toggle("b", false);
+		assertEquals(list.value, "a c");
+	},
+});
