@@ -1,6 +1,11 @@
 {
 	"compilerOptions": {
-		"checkJs": true
+		"checkJs": true,
+		"lib": [
+			"deno.ns",
+			"dom",
+			"dom.iterable"
+		]
 	},
 	"fmt": {
 		"options": {
