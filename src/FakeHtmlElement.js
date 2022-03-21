@@ -82,6 +82,10 @@ export class FakeHtmlElement extends EventTarget {
 	appendChild(child) {
 		this.#children.push(child);
 	}
+
+	get children() {
+		return [...this.#children];
+	}
 }
 
 const cast =

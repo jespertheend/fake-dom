@@ -1,4 +1,4 @@
-import { assertEquals } from "asserts";
+import { assertEquals, assertStrictEquals } from "asserts";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({
@@ -129,5 +129,34 @@ Deno.test({
 		const el = new FakeHtmlElement();
 		const child = new FakeHtmlElement();
 		el.appendChild(child);
+	},
+});
+
+Deno.test({
+	name: "children returns an array of its children",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child1 = new FakeHtmlElement();
+		const child2 = new FakeHtmlElement();
+		el.appendChild(child1);
+		el.appendChild(child2);
+
+		const children = el.children;
+		assertEquals(children.length, 2);
+		assertStrictEquals(children[0], child1);
+		assertStrictEquals(children[1], child2);
+	},
+});
+
+Deno.test({
+	name: "modifying children does not modify the original array",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+		el.appendChild(child);
+
+		const children = el.children;
+		children[1] = new FakeHtmlElement();
+		assertEquals(el.children.length, 1);
 	},
 });
