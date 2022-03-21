@@ -2,6 +2,22 @@ import { assertEquals, assertStrictEquals } from "asserts";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({
+	name: "no tagName",
+	fn() {
+		const el = new FakeHtmlElement();
+		assertStrictEquals(el.tagName, "");
+	},
+});
+
+Deno.test({
+	name: "tagName",
+	fn() {
+		const el = new FakeHtmlElement({ tagName: "div" });
+		assertStrictEquals(el.tagName, "DIV");
+	},
+});
+
+Deno.test({
 	name: "getBoundingClientRect() default params",
 	fn() {
 		const el = new FakeHtmlElement();

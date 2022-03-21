@@ -1,8 +1,14 @@
 import { HtmlElement } from "./FakeHtmlElement.js";
 
 export class FakeDocument {
-	createElement() {
-		return new HtmlElement();
+	/**
+	 * @param {string} tagName
+	 * @param {ElementCreationOptions} [options]
+	 */
+	createElement(tagName, options) {
+		return new HtmlElement({
+			tagName,
+		});
 	}
 }
 
@@ -17,7 +23,7 @@ export function installFakeDocument() {
 	}
 	const fake = new FakeDocument();
 	currentFake = fake;
-	globalThis.document = /** @type {any} */ (fake);
+	globalThis.document = /** @type {Document} */ (fake);
 	return fake;
 }
 

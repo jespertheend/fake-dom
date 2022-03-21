@@ -1,6 +1,7 @@
 import { DomTokenList } from "./FakeDomTokenList.js";
 
 export class FakeHtmlElement extends EventTarget {
+	#tagName;
 	#x;
 	#y;
 	#paddingLeft;
@@ -11,6 +12,7 @@ export class FakeHtmlElement extends EventTarget {
 	#children = [];
 
 	constructor({
+		tagName = "",
 		x = 0,
 		y = 0,
 		clientWidth = 100,
@@ -29,6 +31,8 @@ export class FakeHtmlElement extends EventTarget {
 			paddingBottom: paddingBottom + "px",
 		};
 
+		this.#tagName = tagName.toUpperCase();
+
 		this.#x = x;
 		this.#y = y;
 		this.#paddingLeft = paddingLeft;
@@ -36,6 +40,10 @@ export class FakeHtmlElement extends EventTarget {
 		this.clientWidth = clientWidth;
 		this.clientHeight = clientHeight;
 		this.classList = new DomTokenList();
+	}
+
+	get tagName() {
+		return this.#tagName;
 	}
 
 	getBoundingClientRect() {
