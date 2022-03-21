@@ -3,9 +3,8 @@ import { HtmlElement } from "./FakeHtmlElement.js";
 export class FakeDocument {
 	/**
 	 * @param {string} tagName
-	 * @param {ElementCreationOptions} [options]
 	 */
-	createElement(tagName, options) {
+	createElement(tagName) {
 		return new HtmlElement({
 			tagName,
 		});
