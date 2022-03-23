@@ -14,3 +14,11 @@ Deno.test({
 		assertInstanceOf;
 	},
 });
+
+Deno.test({
+	name: "document has a body",
+	fn() {
+		const document = new FakeDocument();
+		assertEquals(document.body.tagName, "BODY");
+	},
+});

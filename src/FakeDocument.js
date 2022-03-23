@@ -1,6 +1,11 @@
 import { HtmlElement } from "./FakeHtmlElement.js";
 
 export class FakeDocument {
+	constructor() {
+		this.body = new HtmlElement({
+			tagName: "body",
+		});
+	}
 	/**
 	 * @param {string} tagName
 	 */
@@ -22,7 +27,8 @@ export function installFakeDocument() {
 	}
 	const fake = new FakeDocument();
 	currentFake = fake;
-	globalThis.document = /** @type {Document} */ (fake);
+	const castFake = /** @type {unknown} */ (fake);
+	globalThis.document = /** @type {Document} */ (castFake);
 	return fake;
 }
 
