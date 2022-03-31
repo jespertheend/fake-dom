@@ -40,6 +40,40 @@ export class FakeHtmlElement extends EventTarget {
 		this.clientWidth = clientWidth;
 		this.clientHeight = clientHeight;
 		this.classList = new DomTokenList();
+
+		/** @type {Object.<string, unknown>} */
+		this.dataset = new Proxy({}, {
+			get: (_target, prop, _receiver) => {
+				let attr;
+				try {
+					attr = this.camelCaseToDashStyle(prop);
+				} catch {
+					return undefined;
+				}
+				return this.#attributes.get(attr);
+			},
+			set: (_target, prop, value, _receiver) => {
+				const attr = this.camelCaseToDashStyle(prop);
+				this.setAttribute(attr, value);
+				return true;
+			},
+		});
+	}
+
+	/**
+	 * Converts camel case to dash-style for the dataset property
+	 * @private
+	 * @param {string | symbol} str
+	 */
+	camelCaseToDashStyle(str) {
+		if (typeof str === "symbol") {
+			throw new Error("Symbols are not yet supported");
+		}
+		if (/-[a-z]/.test(str)) {
+			throw new Error(`Failed to set a named property. ${str} is not a valid property name.`);
+		}
+		const dashed = str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
+		return "data-" + dashed;
 	}
 
 	get tagName() {
@@ -67,7 +101,7 @@ export class FakeHtmlElement extends EventTarget {
 	 */
 	setAttribute(name, value) {
 		name = name.toLowerCase();
-		this.#attributes.set(name, value);
+		this.#attributes.set(name, String(value));
 	}
 
 	/**
