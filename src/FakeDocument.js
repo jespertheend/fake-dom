@@ -18,11 +18,30 @@ export class FakeDocument {
 
 const originalDocument = globalThis.document;
 
+let sanitizeDoubleInstalls = false;
+/**
+ * When calling `installFakeDocument()` multiple times without calling
+ * `uninstallFakeDocument()` first, by default no error is thrown. However, this
+ * makes it possible for global state to leak from one test to another.
+ *
+ * You can use this function to enable a sanitizer that throws an error when
+ * `installFakeDocument()` is called multiple times.
+ *
+ * The upside is that tests are less likely to leak global state, but the
+ * downside is that if a test fails, any other tests calling
+ * `installFakeDocument()` will fail as well.
+ *
+ * @param {boolean} value
+ */
+export function setSanitizeDoubleInstalls(value) {
+	sanitizeDoubleInstalls = value;
+}
+
 /** @type {FakeDocument?} */
 let currentFake = null;
 
 export function installFakeDocument() {
-	if (currentFake) {
+	if (currentFake && sanitizeDoubleInstalls) {
 		throw new Error("An existing fake document is already installed.");
 	}
 	const fake = new FakeDocument();

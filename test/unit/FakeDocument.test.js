@@ -1,5 +1,10 @@
-import { assertEquals, assertInstanceOf } from "asserts";
-import { FakeDocument } from "../../src/FakeDocument.js";
+import { assertEquals, assertInstanceOf, assertThrows } from "asserts";
+import {
+	FakeDocument,
+	installFakeDocument,
+	setSanitizeDoubleInstalls,
+	uninstallFakeDocument,
+} from "../../src/FakeDocument.js";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({
@@ -20,5 +25,37 @@ Deno.test({
 	fn() {
 		const document = new FakeDocument();
 		assertEquals(document.body.tagName, "BODY");
+	},
+});
+
+Deno.test({
+	name: "installFakeDocument() multiple times doesn't throw",
+	fn() {
+		installFakeDocument();
+		installFakeDocument();
+		uninstallFakeDocument();
+	},
+});
+
+Deno.test({
+	name: "installFakeDocument() multiple times throws when sanitizers are enabled",
+	fn() {
+		setSanitizeDoubleInstalls(true);
+		installFakeDocument();
+		assertThrows(() => installFakeDocument());
+		uninstallFakeDocument();
+		setSanitizeDoubleInstalls(false);
+	},
+});
+
+Deno.test({
+	name: "installFakeDocument() multiple times doesn't throw when uninstall is called in between",
+	fn() {
+		setSanitizeDoubleInstalls(true);
+		installFakeDocument();
+		uninstallFakeDocument();
+		installFakeDocument();
+		uninstallFakeDocument();
+		setSanitizeDoubleInstalls(false);
 	},
 });
