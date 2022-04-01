@@ -10,6 +10,8 @@ export class FakeHtmlElement extends EventTarget {
 	#attributes = new Map();
 	/** @type {(FakeHtmlElement | HTMLElement)[]} */
 	#children = [];
+	/** @type {FakeHtmlElement | HTMLElement | null} */
+	#parentElement = null;
 
 	constructor({
 		tagName = "",
@@ -122,10 +124,24 @@ export class FakeHtmlElement extends EventTarget {
 		return [...this.#children];
 	}
 
+	get parentElement() {
+		return this.#parentElement;
+	}
+
+	/**
+	 * @param {FakeHtmlElement | HTMLElement | null} parentElement
+	 */
+	_setParentElement(parentElement) {
+		this.#parentElement = parentElement;
+	}
+
 	/**
 	 * @param {FakeHtmlElement | HTMLElement} child
 	 */
 	appendChild(child) {
+		if (child instanceof FakeHtmlElement) {
+			child._setParentElement(this);
+		}
 		this.#children.push(child);
 	}
 
@@ -136,6 +152,9 @@ export class FakeHtmlElement extends EventTarget {
 		const index = this.#children.indexOf(child);
 		if (index === -1) {
 			throw new Error("The node to be removed is not a child of this node.");
+		}
+		if (child instanceof FakeHtmlElement) {
+			child._setParentElement(null);
 		}
 		this.#children.splice(index, 1);
 	}
@@ -148,6 +167,9 @@ export class FakeHtmlElement extends EventTarget {
 		const index = this.#children.indexOf(referenceNode);
 		if (index === -1) {
 			throw new Error("Invalid reference node");
+		}
+		if (newNode instanceof FakeHtmlElement) {
+			newNode._setParentElement(this);
 		}
 		this.#children.splice(index, 0, newNode);
 	}

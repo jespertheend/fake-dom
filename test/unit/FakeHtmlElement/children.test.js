@@ -97,3 +97,41 @@ Deno.test({
 		assertThrows(() => el.removeChild(el2));
 	},
 });
+
+Deno.test({
+	name: "appending a child sets the parentElement",
+	fn() {
+		const parent = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+
+		parent.appendChild(child);
+
+		assertStrictEquals(child.parentElement, parent);
+	},
+});
+
+Deno.test({
+	name: "insertBefore() sets the parent element",
+	fn() {
+		const parent = new FakeHtmlElement();
+		const child1 = new FakeHtmlElement();
+		const child2 = new FakeHtmlElement();
+		parent.appendChild(child2);
+
+		parent.insertBefore(child1, child2);
+
+		assertStrictEquals(child1.parentElement, parent);
+	},
+});
+
+Deno.test({
+	name: "removeChild() sets the parent element to null",
+	fn() {
+		const parent = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+		parent.appendChild(child);
+		parent.removeChild(child);
+
+		assertEquals(child.parentElement, null);
+	},
+});
