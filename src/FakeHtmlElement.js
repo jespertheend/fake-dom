@@ -26,6 +26,7 @@ export class FakeHtmlElement extends EventTarget {
 	} = {}) {
 		super();
 
+		/** @type {Object.<string, string>} */
 		this.style = {
 			paddingLeft: paddingLeft + "px",
 			paddingRight: paddingRight + "px",
