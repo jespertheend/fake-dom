@@ -16,5 +16,6 @@ export class FakeDragEvent extends FakeMouseEvent {
 	}
 }
 
-const cast = /** @type {typeof FakeDragEvent & typeof DragEvent & (new (...args: any) => FakeDragEvent & DragEvent)} */ (FakeDragEvent);
+const cast =
+	/** @type {typeof FakeDragEvent & typeof DragEvent & (new (...args: any) => FakeDragEvent & DragEvent)} */ (FakeDragEvent);
 export { cast as DragEvent };
