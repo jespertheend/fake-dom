@@ -9,7 +9,7 @@
 	},
 	"fmt": {
 		"options": {
-			"lineWidth": 120,
+			"lineWidth": 300,
 			"useTabs": true
 		}
 	},

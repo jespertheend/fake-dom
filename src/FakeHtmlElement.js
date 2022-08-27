@@ -176,6 +176,5 @@ export class FakeHtmlElement extends EventTarget {
 	}
 }
 
-const cast =
-	/** @type {typeof FakeHtmlElement & typeof HTMLElement & (new (...args: any) => FakeHtmlElement & HTMLElement)} */ (FakeHtmlElement);
+const cast = /** @type {typeof FakeHtmlElement & typeof HTMLElement & (new (...args: any) => FakeHtmlElement & HTMLElement)} */ (FakeHtmlElement);
 export { cast as HtmlElement };

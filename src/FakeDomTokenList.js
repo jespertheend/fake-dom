@@ -45,6 +45,5 @@ export class FakeDomTokenList {
 	}
 }
 
-const cast =
-	/** @type {typeof FakeDomTokenList & typeof DOMTokenList & (new (...args: any) => FakeDomTokenList & DOMTokenList)} */ (FakeDomTokenList);
+const cast = /** @type {typeof FakeDomTokenList & typeof DOMTokenList & (new (...args: any) => FakeDomTokenList & DOMTokenList)} */ (FakeDomTokenList);
 export { cast as DomTokenList };

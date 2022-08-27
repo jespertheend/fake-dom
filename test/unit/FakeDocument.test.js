@@ -1,10 +1,5 @@
 import { assertEquals, assertInstanceOf, assertThrows } from "asserts";
-import {
-	FakeDocument,
-	installFakeDocument,
-	setSanitizeDoubleInstalls,
-	uninstallFakeDocument,
-} from "../../src/FakeDocument.js";
+import { FakeDocument, installFakeDocument, setSanitizeDoubleInstalls, uninstallFakeDocument } from "../../src/FakeDocument.js";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({

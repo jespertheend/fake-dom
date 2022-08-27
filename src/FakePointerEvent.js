@@ -14,6 +14,5 @@ export class FakePointerEvent extends FakeMouseEvent {
 	}
 }
 
-const cast =
-	/** @type {typeof FakePointerEvent & typeof PointerEvent & (new (...args: any) => FakePointerEvent & PointerEvent)} */ (FakePointerEvent);
+const cast = /** @type {typeof FakePointerEvent & typeof PointerEvent & (new (...args: any) => FakePointerEvent & PointerEvent)} */ (FakePointerEvent);
 export { cast as PointerEvent };
