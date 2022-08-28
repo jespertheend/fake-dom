@@ -179,10 +179,10 @@ export class FakeHtmlElement extends EventTarget {
 	 * @param {FakeHtmlElement | HTMLElement} otherNode
 	 */
 	contains(otherNode) {
+		if (otherNode == this) return true;
 		const other = /** @type {FakeHtmlElement} */ (otherNode);
 		const children = /** @type {FakeHtmlElement[]} */ (this.#children);
 		for (const child of children) {
-			if (child == other) return true;
 			if (child.contains(other)) return true;
 		}
 		return false;

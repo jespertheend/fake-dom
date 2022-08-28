@@ -148,6 +148,7 @@ Deno.test({
 
 		const nonChild = new FakeHtmlElement();
 
+		assertEquals(parent.contains(parent), true);
 		assertEquals(parent.contains(child), true);
 		assertEquals(parent.contains(subChild), true);
 		assertEquals(parent.contains(nonChild), false);
