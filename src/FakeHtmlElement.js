@@ -174,6 +174,19 @@ export class FakeHtmlElement extends EventTarget {
 		}
 		this.#children.splice(index, 0, newNode);
 	}
+
+	/**
+	 * @param {FakeHtmlElement | HTMLElement} otherNode
+	 */
+	contains(otherNode) {
+		const other = /** @type {FakeHtmlElement} */ (otherNode);
+		const children = /** @type {FakeHtmlElement[]} */ (this.#children);
+		for (const child of children) {
+			if (child == other) return true;
+			if (child.contains(other)) return true;
+		}
+		return false;
+	}
 }
 
 const cast = /** @type {typeof FakeHtmlElement & typeof HTMLElement & (new (...args: any) => FakeHtmlElement & HTMLElement)} */ (FakeHtmlElement);

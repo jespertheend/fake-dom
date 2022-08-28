@@ -135,3 +135,21 @@ Deno.test({
 		assertEquals(child.parentElement, null);
 	},
 });
+
+Deno.test({
+	name: "contains()",
+	fn() {
+		const parent = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+		parent.appendChild(child);
+
+		const subChild = new FakeHtmlElement();
+		child.appendChild(subChild);
+
+		const nonChild = new FakeHtmlElement();
+
+		assertEquals(parent.contains(child), true);
+		assertEquals(parent.contains(subChild), true);
+		assertEquals(parent.contains(nonChild), false);
+	},
+});
