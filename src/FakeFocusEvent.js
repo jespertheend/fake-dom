@@ -5,6 +5,7 @@ export class FakeFocusEvent extends Event {
 	 */
 	constructor(type, eventInit) {
 		super(type, eventInit);
+		this.relatedTarget = eventInit?.relatedTarget || null;
 	}
 }
 
