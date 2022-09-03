@@ -1,7 +1,8 @@
 import { HtmlElement } from "./FakeHtmlElement.js";
 
-export class FakeDocument {
+export class FakeDocument extends EventTarget {
 	constructor() {
+		super();
 		this.body = new HtmlElement({
 			tagName: "body",
 		});
