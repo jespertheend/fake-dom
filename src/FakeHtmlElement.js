@@ -88,6 +88,14 @@ export class FakeHtmlElement extends EventTarget {
 		return this.#tagName;
 	}
 
+	set id(value) {
+		this.setAttribute("id", value);
+	}
+
+	get id() {
+		return this.getAttribute("id") || "";
+	}
+
 	getBoundingClientRect() {
 		const x = this.#x + this.#paddingLeft;
 		const y = this.#y + this.#paddingTop;

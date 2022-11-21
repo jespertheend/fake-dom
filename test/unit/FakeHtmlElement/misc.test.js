@@ -18,6 +18,30 @@ Deno.test({
 });
 
 Deno.test({
+	name: "tagName for namespace element",
+	fn() {
+		const el = new FakeHtmlElement({ tagName: "path", isDomNode: false });
+		assertStrictEquals(el.tagName, "path");
+	},
+});
+
+Deno.test({
+	name: "id",
+	fn() {
+		const el = new FakeHtmlElement();
+		assertEquals(el.id, "");
+
+		el.id = "element id";
+		assertEquals(el.id, "element id");
+		assertEquals(el.getAttribute("id"), "element id");
+
+		el.setAttribute("id", "other id");
+		assertEquals(el.id, "other id");
+		assertEquals(el.getAttribute("id"), "other id");
+	},
+});
+
+Deno.test({
 	name: "getBoundingClientRect() default params",
 	fn() {
 		const el = new FakeHtmlElement();
