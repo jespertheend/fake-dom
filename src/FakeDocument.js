@@ -7,11 +7,23 @@ export class FakeDocument extends EventTarget {
 			tagName: "body",
 		});
 	}
+
 	/**
 	 * @param {string} tagName
 	 */
 	createElement(tagName) {
 		return new HtmlElement({
+			tagName,
+		});
+	}
+
+	/**
+	 * @param {string} _namespace
+	 * @param {string} tagName
+	 */
+	createElementNS(_namespace, tagName) {
+		return new HtmlElement({
+			isDomNode: false,
 			tagName,
 		});
 	}

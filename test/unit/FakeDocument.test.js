@@ -16,6 +16,19 @@ Deno.test({
 });
 
 Deno.test({
+	name: "createElementNS()",
+	fn() {
+		const document = new FakeDocument();
+
+		const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		assertInstanceOf(el, FakeHtmlElement);
+		assertEquals(el.tagName, "path");
+
+		assertInstanceOf;
+	},
+});
+
+Deno.test({
 	name: "document has a body",
 	fn() {
 		const document = new FakeDocument();

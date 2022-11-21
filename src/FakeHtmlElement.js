@@ -15,6 +15,7 @@ export class FakeHtmlElement extends EventTarget {
 
 	constructor({
 		tagName = "",
+		isDomNode = true,
 		x = 0,
 		y = 0,
 		clientWidth = 100,
@@ -34,7 +35,11 @@ export class FakeHtmlElement extends EventTarget {
 			paddingBottom: paddingBottom + "px",
 		};
 
-		this.#tagName = tagName.toUpperCase();
+		if (isDomNode) {
+			this.#tagName = tagName.toUpperCase();
+		} else {
+			this.#tagName = tagName;
+		}
 
 		this.#x = x;
 		this.#y = y;
