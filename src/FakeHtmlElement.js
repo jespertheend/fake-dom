@@ -173,6 +173,13 @@ export class FakeHtmlElement extends EventTarget {
 		this.#children.splice(index, 1);
 	}
 
+	remove() {
+		if (this.parentElement) {
+			const castThis = /** @type {HTMLElement} */ (/** @type {unknown} */ (this));
+			this.parentElement.removeChild(castThis);
+		}
+	}
+
 	/**
 	 * @param {FakeHtmlElement | HTMLElement} newNode
 	 * @param {FakeHtmlElement | HTMLElement} referenceNode

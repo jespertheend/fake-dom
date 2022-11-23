@@ -132,6 +132,20 @@ Deno.test({
 		parent.appendChild(child);
 		parent.removeChild(child);
 
+		assertEquals(parent.children.length, 0);
+		assertEquals(child.parentElement, null);
+	},
+});
+
+Deno.test({
+	name: "remove() removes the element",
+	fn() {
+		const parent = new FakeHtmlElement();
+		const child = new FakeHtmlElement();
+		parent.appendChild(child);
+		child.remove();
+
+		assertEquals(parent.children.length, 0);
 		assertEquals(child.parentElement, null);
 	},
 });
