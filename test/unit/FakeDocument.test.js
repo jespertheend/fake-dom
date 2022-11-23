@@ -29,6 +29,14 @@ Deno.test({
 });
 
 Deno.test({
+	name: "document has a head",
+	fn() {
+		const document = new FakeDocument();
+		assertEquals(document.head.tagName, "HEAD");
+	},
+});
+
+Deno.test({
 	name: "document has a body",
 	fn() {
 		const document = new FakeDocument();

@@ -3,9 +3,8 @@ import { HtmlElement } from "./FakeHtmlElement.js";
 export class FakeDocument extends EventTarget {
 	constructor() {
 		super();
-		this.body = new HtmlElement({
-			tagName: "body",
-		});
+		this.head = new HtmlElement({ tagName: "head" });
+		this.body = new HtmlElement({ tagName: "body" });
 	}
 
 	/**
