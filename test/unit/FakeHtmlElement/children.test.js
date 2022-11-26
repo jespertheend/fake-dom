@@ -27,6 +27,20 @@ Deno.test({
 });
 
 Deno.test({
+	name: "childElementCount returns the correct number",
+	fn() {
+		const parent = new FakeHtmlElement();
+		assertEquals(parent.childElementCount, 0);
+
+		const child1 = new FakeHtmlElement();
+		parent.appendChild(child1);
+		const child2 = new FakeHtmlElement();
+		parent.appendChild(child2);
+		assertEquals(parent.childElementCount, 2);
+	},
+});
+
+Deno.test({
 	name: "modifying children does not modify the original array",
 	fn() {
 		const el = new FakeHtmlElement();

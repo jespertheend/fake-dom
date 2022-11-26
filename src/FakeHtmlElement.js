@@ -138,6 +138,10 @@ export class FakeHtmlElement extends EventTarget {
 		return [...this.#children];
 	}
 
+	get childElementCount() {
+		return this.#children.length;
+	}
+
 	get parentElement() {
 		return this.#parentElement;
 	}
