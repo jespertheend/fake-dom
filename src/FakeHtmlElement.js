@@ -211,6 +211,8 @@ export class FakeHtmlElement extends EventTarget {
 		}
 		return false;
 	}
+
+	focus() {}
 }
 
 const cast = /** @type {typeof FakeHtmlElement & typeof HTMLElement & (new (...args: any) => FakeHtmlElement & HTMLElement)} */ (FakeHtmlElement);
