@@ -15,3 +15,12 @@ Deno.test({
 		assertEquals(decl.getPropertyValue("paddingRight"), "5px");
 	},
 });
+
+Deno.test({
+	name: "setting empty string",
+	fn() {
+		const decl = new CSSStyleDeclaration();
+		decl.setProperty("paddingRight", "1px");
+		decl.setProperty("paddingRight", "");
+	},
+});

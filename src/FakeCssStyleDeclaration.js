@@ -9,7 +9,7 @@ export class FakeCssStyleDeclaration {
 			set(target, prop, newValue) {
 				const castTarget = /** @type {any} */ (target);
 				castTarget[prop] = String(newValue);
-				return newValue;
+				return true;
 			},
 		});
 	}
