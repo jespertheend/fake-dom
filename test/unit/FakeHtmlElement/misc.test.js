@@ -88,11 +88,11 @@ Deno.test({
 			y: 100,
 			clientWidth: 200,
 			clientHeight: 300,
-			paddingLeft: 10,
-			paddingRight: 20,
-			paddingTop: 30,
-			paddingBottom: 40,
 		});
+		el.style.paddingLeft = "10px";
+		el.style.paddingRight = "20px";
+		el.style.paddingTop = "30px";
+		el.style.paddingBottom = "40px";
 		assertEquals(el.getBoundingClientRect(), {
 			x: 60,
 			y: 130,

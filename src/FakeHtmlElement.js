@@ -1,11 +1,10 @@
 import { DomTokenList } from "./FakeDomTokenList.js";
+import { CSSStyleDeclaration } from "./FakeCssStyleDeclaration.js";
 
 export class FakeHtmlElement extends EventTarget {
 	#tagName;
 	#x;
 	#y;
-	#paddingLeft;
-	#paddingTop;
 	/** @type {Map<string, string>} */
 	#attributes = new Map();
 	/** @type {(FakeHtmlElement | HTMLElement)[]} */
@@ -20,20 +19,10 @@ export class FakeHtmlElement extends EventTarget {
 		y = 0,
 		clientWidth = 100,
 		clientHeight = 100,
-		paddingLeft = 0,
-		paddingRight = 0,
-		paddingTop = 0,
-		paddingBottom = 0,
 	} = {}) {
 		super();
 
-		/** @type {Object.<string, string>} */
-		this.style = {
-			paddingLeft: paddingLeft + "px",
-			paddingRight: paddingRight + "px",
-			paddingTop: paddingTop + "px",
-			paddingBottom: paddingBottom + "px",
-		};
+		this.style = new CSSStyleDeclaration();
 
 		if (isDomNode) {
 			this.#tagName = tagName.toUpperCase();
@@ -43,8 +32,6 @@ export class FakeHtmlElement extends EventTarget {
 
 		this.#x = x;
 		this.#y = y;
-		this.#paddingLeft = paddingLeft;
-		this.#paddingTop = paddingTop;
 		this.clientWidth = clientWidth;
 		this.clientHeight = clientHeight;
 		this.classList = new DomTokenList();
@@ -97,8 +84,16 @@ export class FakeHtmlElement extends EventTarget {
 	}
 
 	getBoundingClientRect() {
-		const x = this.#x + this.#paddingLeft;
-		const y = this.#y + this.#paddingTop;
+		let paddingLeft = 0;
+		let paddingTop = 0;
+		if (this.style.paddingLeft.endsWith("px")) {
+			paddingLeft = parseFloat(this.style.paddingLeft.slice(0, -2));
+		}
+		if (this.style.paddingTop.endsWith("px")) {
+			paddingTop = parseFloat(this.style.paddingTop.slice(0, -2));
+		}
+		const x = this.#x + paddingLeft;
+		const y = this.#y + paddingTop;
 		return {
 			x,
 			y,
