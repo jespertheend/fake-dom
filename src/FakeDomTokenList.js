@@ -20,6 +20,15 @@ export class FakeDomTokenList {
 	}
 
 	/**
+	 * @param  {...string} tokens
+	 */
+	remove(...tokens) {
+		for (const token of tokens) {
+			this.#list.delete(token);
+		}
+	}
+
+	/**
 	 * @param {string} token
 	 * @param {boolean} [force]
 	 */

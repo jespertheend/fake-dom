@@ -20,6 +20,16 @@ Deno.test({
 });
 
 Deno.test({
+	name: "remove",
+	fn() {
+		const list = new FakeDomTokenList();
+		list.add("a", "b", "c");
+		list.remove("a", "c");
+		assertEquals(list.value, "b");
+	},
+});
+
+Deno.test({
 	name: "toggle()",
 	fn() {
 		const list = new FakeDomTokenList();
