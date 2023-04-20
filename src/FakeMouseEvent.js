@@ -10,6 +10,8 @@ export class FakeMouseEvent extends Event {
 		this.clientY = eventInit?.clientY ?? 0;
 		this.buttons = eventInit?.buttons ?? 0;
 
+		this.button = eventInit?.button ?? 0;
+		this.buttons = eventInit?.buttons ?? 0;
 		this.altKey = eventInit?.altKey ?? false;
 		this.ctrlKey = eventInit?.ctrlKey ?? false;
 		this.metaKey = eventInit?.altKey ?? false;
