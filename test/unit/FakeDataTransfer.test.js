@@ -33,3 +33,31 @@ Deno.test({
 		assertEquals(dataTransfer.getData("b"), "undefined");
 	},
 });
+
+Deno.test({
+	name: "DataTransfer.items",
+	fn() {
+		const dataTransfer = new FakeDataTransfer();
+		dataTransfer.setData("a", "hello");
+		dataTransfer.setData("b", "world");
+
+		assertEquals(dataTransfer.items.length, 2);
+		const array = Array.from(dataTransfer.items);
+		assertEquals(array.length, 2);
+
+		/** @type {string[]} */
+		const getAsStringCalls = [];
+
+		const item1 = array[0];
+		assertEquals(item1.kind, "string");
+		assertEquals(item1.type, "a");
+		item1.getAsString((str) => getAsStringCalls.push(str));
+		assertEquals(getAsStringCalls, ["hello"]);
+
+		const item2 = array[1];
+		assertEquals(item2.kind, "string");
+		assertEquals(item2.type, "b");
+		item2.getAsString((str) => getAsStringCalls.push(str));
+		assertEquals(getAsStringCalls, ["hello", "world"]);
+	},
+});

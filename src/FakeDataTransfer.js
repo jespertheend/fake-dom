@@ -1,3 +1,5 @@
+import { FakeDataTransferItemList } from "./FakeDataTransferItemList.js";
+
 export class FakeDataTransfer {
 	dropEffect = "none";
 	effectAllowed = "none";
@@ -6,6 +8,8 @@ export class FakeDataTransfer {
 
 	/** @type {Map<string, string>} */
 	#items = new Map();
+
+	items = new FakeDataTransferItemList(this.#items);
 
 	get types() {
 		return [...this.#items.keys()];
