@@ -33,6 +33,13 @@ export class FakeDataTransfer {
 	getData(type) {
 		return this.#items.get(type) || "";
 	}
+
+	/**
+	 * @param {Element} _image
+	 * @param {number} _x
+	 * @param {number} _y
+	 */
+	setDragImage(_image, _x, _y) {}
 }
 
 const cast = /** @type {typeof FakeDataTransfer & typeof DataTransfer} */ (FakeDataTransfer);
