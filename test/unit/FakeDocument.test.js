@@ -1,5 +1,5 @@
-import { assertEquals, assertInstanceOf, assertThrows } from "asserts";
-import { FakeDocument, installFakeDocument, setSanitizeDoubleInstalls, uninstallFakeDocument } from "../../src/FakeDocument.js";
+import { assertEquals, assertExists, assertInstanceOf, assertRejects, assertThrows } from "asserts";
+import { FakeDocument, installFakeDocument, runWithDom, runWithDomAsync, setSanitizeDoubleInstalls, uninstallFakeDocument } from "../../src/FakeDocument.js";
 import { FakeHtmlElement } from "../../src/FakeHtmlElement.js";
 
 Deno.test({
@@ -73,5 +73,53 @@ Deno.test({
 		installFakeDocument();
 		uninstallFakeDocument();
 		setSanitizeDoubleInstalls(false);
+	},
+});
+
+Deno.test({
+	name: "runWithDom creates and removes the dom",
+	fn() {
+		runWithDom(() => {
+			assertExists(document);
+		});
+		assertEquals(document, undefined);
+	},
+});
+
+Deno.test({
+	name: "runWithDom creates and removes the dom even when an error occurs",
+	fn() {
+		assertThrows(() => {
+			runWithDom(() => {
+				assertExists(document);
+				throw new Error("oh no");
+			});
+		});
+		assertEquals(document, undefined);
+	},
+});
+
+Deno.test({
+	name: "runWithDomAsync creates and removes the dom",
+	async fn() {
+		await runWithDomAsync(async () => {
+			await Promise.resolve();
+			assertExists(document);
+		});
+		assertEquals(document, undefined);
+	},
+});
+
+Deno.test({
+	name: "runWithDomAsync creates and removes the dom even when an error occurs",
+	async fn() {
+		await assertRejects(async () => {
+			await runWithDomAsync(async () => {
+				await Promise.resolve();
+				assertExists(document);
+				throw new Error("oh no");
+			});
+		});
+		assertEquals(document, undefined);
 	},
 });

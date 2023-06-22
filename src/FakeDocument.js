@@ -70,3 +70,57 @@ export function uninstallFakeDocument() {
 	currentFake = null;
 	globalThis.document = originalDocument;
 }
+
+// I tried combining runWithDom and runWithDom into one function, but that doesn't work because
+// it will cause tests with non async functions to throw outside of the test.
+// That way Deno's test runner is not able to know which test the error originated from.
+// For example:
+//
+// Deno.test("name", () => {
+// 	runWithDomAsync(() => {
+// 		// do something
+// 	})
+// })
+//
+// Even though the function passed to runWithDomAsync is synchronous, runWithDomAsync itself is not.
+// So the function passed to Deno.test() will finish before runWithDomAsync is completed.
+
+/**
+ * Runs the function with an installed fake dom.
+ * Ensures global scope is cleaned up after running, even if errors are thrown.
+ * @param {() => void | undefined} fn
+ */
+export function runWithDom(fn) {
+	installFakeDocument();
+
+	try {
+		fn();
+	} finally {
+		uninstallFakeDocument();
+	}
+}
+
+/**
+ * Same as {@linkcode runWithDom} but async.
+ * Make sure to await this call, otherwise test runners won't know which test an error originated from.
+ *
+ * For example:
+ *
+ * ```js
+ * Deno.test("name", async () => {
+ * 	await runWithDomAsync(async () => {
+ * 		// do something
+ * 	})
+ * })
+ * ```
+ * @param {() => (Promise<void>)} fn
+ */
+export async function runWithDomAsync(fn) {
+	installFakeDocument();
+
+	try {
+		await fn();
+	} finally {
+		uninstallFakeDocument();
+	}
+}
