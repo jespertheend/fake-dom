@@ -17,6 +17,17 @@ export class FakeDocument extends EventTarget {
 	}
 
 	/**
+	 * @param {string} text
+	 */
+	createTextNode(text) {
+		const el = new HtmlElement({
+			tagName: "textNode",
+		});
+		el.textContent = text;
+		return el;
+	}
+
+	/**
 	 * @param {string} _namespace
 	 * @param {string} tagName
 	 */
