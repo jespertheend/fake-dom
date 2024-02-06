@@ -41,6 +41,27 @@ Deno.test({
 });
 
 Deno.test({
+	name: "append()",
+	fn() {
+		const el = new FakeHtmlElement();
+		const child1 = new FakeHtmlElement();
+		const child2 = new FakeHtmlElement();
+		const child3 = new FakeHtmlElement();
+		el.append(child1);
+		el.append(child2, "text", child3);
+
+		const children = el.children;
+		assertEquals(children.length, 4);
+		assertStrictEquals(children[0], child1);
+		assertStrictEquals(children[1], child2);
+		const castTextNode = /** @type {HTMLElement} */ (children[2]);
+		assertEquals(castTextNode.tagName, "TEXTNODE");
+		assertEquals(castTextNode.textContent, "text");
+		assertStrictEquals(children[3], child3);
+	},
+});
+
+Deno.test({
 	name: "modifying children does not modify the original array",
 	fn() {
 		const el = new FakeHtmlElement();

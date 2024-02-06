@@ -159,6 +159,24 @@ export class FakeHtmlElement extends EventTarget {
 	}
 
 	/**
+	 * @param {(string | FakeHtmlElement | HTMLElement)[]} nodes
+	 */
+	append(...nodes) {
+		for (const node of nodes) {
+			if (typeof node == "string") {
+				const el = new FakeHtmlElement({
+					tagName: "textNode",
+				});
+				const cast = /** @type {HTMLElement} */ (/** @type {unknown} */ (el));
+				cast.textContent = node;
+				this.appendChild(cast);
+			} else {
+				this.appendChild(node);
+			}
+		}
+	}
+
+	/**
 	 * @param {FakeHtmlElement | HTMLElement} child
 	 */
 	removeChild(child) {
